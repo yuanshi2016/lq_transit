@@ -1,0 +1,60 @@
+before:
+  hooks:
+    # You may remove this if you don't use go modules.
+    - go mod download
+    # you may remove this if you don't need go generate
+#    - go generate ./...
+builds:
+  - env:
+      - CGO_ENABLED=0
+    binary: "main"
+    # ldflags:
+    #   - "-X 'main.aa=aa'"
+    goos:
+      - linux
+      - windows
+      #- darwin
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+    goarm:
+      - 6
+      - 7
+    ignore:
+#      - goos: darwin
+#        goarch: arm
+#      - goos: darwin
+#        goarch: arm64
+      - goos: windows
+        goarch: arm
+      - goarm: windows
+        goarch: arm64
+archives:
+  - name_template: '{{ .Os }}_{{ .Arch }}{{ if .Arm }}_v{{ .Arm }}{{ end }}'
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+    wrap_in_directory: false
+
+    replacements:
+      #darwin: macOS
+      linux: Linux
+      windows: Windows
+      386: 32-bit
+      amd64: 64-bit
+      arm: ARM
+      arm64: ARM64
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
