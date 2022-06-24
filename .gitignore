@@ -2,4 +2,7 @@
 /build.sh
 .idea
 /go.sum
-/dist
+codeleven/decode.go
+codeleven/decode.js
+/dist/
+/main.go.back
