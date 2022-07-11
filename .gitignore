@@ -6,3 +6,5 @@ codeleven/decode.go
 codeleven/decode.js
 /dist/
 /main.go.back
+.goreleaser.yaml
+**/node_modules
